@@ -1,50 +1,54 @@
-package br.com.dio.desafio.dominio;
+import java.text.DecimalFormat;
+import java.util.Scanner;
 
-import java.time.LocalDate;
 
-public class App {
+    public static void main(String[] args) {
+        // Lendo os dados de Entrada:
+        Scanner scanner = new Scanner(System.in);
+        int numeroConta = scanner.nextInt();
+        String titular = scanner.next();
+        double saldo = scanner.nextDouble();
+        double taxaJuros = scanner.nextDouble();
 
-	public static void main(String[] args) {
+        ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, titular, saldo, taxaJuros);
 
-		Curso curso1 = new Curso();
-		curso1.setTitulo("Java");
-		curso1.setDescricao("Curso em java POO");
-		curso1.setCargaHoraria(7);
+        System.out.println("Conta Poupanca:");
+        contaPoupanca.exibirInformacoes();
+    }
 
-		Curso curso2 = new Curso();
-		curso2.setTitulo("JavaScript");
-		curso2.setDescricao("Curso em javascript");
-		curso2.setCargaHoraria(10);
 
-		Mentoria mentoria1 = new Mentoria();
-		mentoria1.setTitulo("Mentoria de Java");
-		mentoria1.setDescricao("Descricao mentoria Java");
-		mentoria1.setData(LocalDate.now());
+class ContaBancaria {
+    protected int numero;
+    protected String titular;
+    protected double saldo;
 
-		Bootcamp bootcamp = new Bootcamp();
-		bootcamp.setNome("Bootcamp Java Developer");
-		bootcamp.setDescricao("Descricao Bootcamp");
-		bootcamp.getConteudos().add(curso1);
-		bootcamp.getConteudos().add(curso2);
-		bootcamp.getConteudos().add(mentoria1);
+    public ContaBancaria(int numero, String titular, double saldo) {
+        this.numero = numero;
+        this.titular = titular;
+        this.saldo = saldo;
+    }
 
-		Devs dev1 = new Devs();
-		dev1.setNome("Fernando");
-		dev1.inscreverBootcamp(bootcamp);
-		dev1.progredir();
-		dev1.progredir();
-		System.out.println("Conteudos inscritos: " + dev1.getConteudosInscrtito());
-		System.out.println("Conteudos concluidos: " + dev1.getConteudosConcluidos());
-		System.out.println("XP " + dev1.getNome() + "= " + dev1.calcularTotalXP());
+    public void exibirInformacoes() {
+        DecimalFormat decimalFormat = new DecimalFormat("#.0");
+        System.out.println(titular);
+        System.out.println(numero);
+        System.out.println("Saldo: R$ " + decimalFormat.format(saldo));
+    }
+}
 
-		Devs dev2 = new Devs();
-		dev2.setNome("Joao");
-		dev2.inscreverBootcamp(bootcamp);
-		dev2.progredir();
-		System.out.println("Conteudos inscritos: " + dev2.getConteudosInscrtito());
-		System.out.println("Conteudos concluidos: " + dev2.getConteudosConcluidos());
-		System.out.println("XP " + dev2.getNome() + "= " + dev2.calcularTotalXP());
+class ContaPoupanca extends ContaBancaria {
+  
+    private double taxaJuros;
 
-	}
+    public ContaPoupanca(int numero, String titular, double saldo, double taxaJuros) {
+      super(numero, titular, taxaJuros);
+      this.taxaJuros = taxaJuros;
+        //TODO: Implementar adequadamente esta sobrecarga de construtores.
+    }
 
+    public void exibirInformacoes() {
+        super.exibirInformacoes();
+          System.out.println("Taxa de juros: "+ this.taxaJuros+"%");
+        //TODO: Complementar as informações com a taxa de juros.
+    }
 }
